@@ -1,0 +1,1907 @@
+<Page
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	xmlns:System="clr-namespace:System;assembly=mscorlib"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:local="clr-namespace:ForzaUI"
+	mc:Ignorable="d"
+	x:Class="ForzaUI.TOY_GR86_22">
+	
+	<Page.Resources>
+		<!--	шаблоны изображений	-->
+		<Style x:Key="ImageDriver" TargetType="{x:Type Image}">
+			<Setter Property="Width" Value="1280"/>
+			<Setter Property="Height" Value="720"/>
+			<Setter Property="Source" Value="game:/media/cars/TOY_GR86_22/UI/Textures/TOY_GR86_22_Driver.png"/>
+			<Setter Property="Stretch" Value="Fill"/>
+			<Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+		</Style>
+		<Style x:Key="ImageIcon" TargetType="{x:Type Image}">
+			<Setter Property="Width" Value="512"/>
+			<Setter Property="Height" Value="512"/>
+			<Setter Property="Source" Value="game:/media/cars/_library/Textures/z_sub_wrxsti_alt_001/symbols/swatches/sub_wrxsti_15_symbols_basecoloralpha_15ewu0g.png"/>
+			<Setter Property="Stretch" Value="Fill"/>
+			<Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+		</Style>
+		<!--	шаблоны текста	-->
+		<Style x:Key="TextBlockStyle" TargetType="{x:Type local:FastTextBlock}">
+			<Setter Property="FontFamily" Value="Moire"/>
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="TextAlignment" Value="Right"/>
+		</Style>
+		<Style x:Key="InfoFontStyle" TargetType="{x:Type local:FastTextBlock}">
+			<Setter Property="FontFamily" Value="Moire"/>
+			<Setter Property="FontSize" Value="28"/>
+			<Setter Property="Foreground" Value="#FFF2F2F2"/>
+			<Setter Property="TextAlignment" Value="Right"/>
+			<Setter Property="RenderTransformOrigin" Value="1.0,0.5"/>
+			<Setter Property="Height" Value="30"/>
+		</Style>
+		<Style x:Key="TachFontStyle" TargetType="{x:Type local:FastTextBlock}">
+			<Setter Property="FontFamily" Value="Moire"/>
+			<Setter Property="FontSize" Value="26"/>
+			<Setter Property="Foreground" Value="#FFF2F2F2"/>
+			<Setter Property="TextAlignment" Value="Center"/>
+			<Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+			<Setter Property="Height" Value="30"/>
+			<Setter Property="Width" Value="25"/>
+		</Style>
+		<!--	шаблоны для правого монохром дисплея	-->
+		<Style x:Key="LCDBar" TargetType="{x:Type Rectangle}">
+			<Setter Property="Fill" Value="#FFEFFAED"/>
+			<Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+			<Setter Property="Visibility" Value="Hidden"/>
+			<Setter Property="Height" Value="37"/>
+			<Setter Property="Width" Value="9.5"/>
+		</Style>
+		<Style x:Key="LCDFont" TargetType="{x:Type local:FastTextBlock}">
+			<Setter Property="FontFamily" Value="Moire"/>
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="Foreground" Value="#FFEFFAED"/>
+			<Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+			<Setter Property="Height" Value="26"/>
+			<Setter Property="Width" Value="24"/>
+		</Style>
+		<Style x:Key="LCDFontDigital" TargetType="{x:Type local:FastTextBlock}">
+			<Setter Property="FontFamily" Value="DG5_QuartzMS"/>
+			<Setter Property="FontSize" Value="26"/>
+			<Setter Property="Foreground" Value="#FFEFFAED"/>
+			<Setter Property="TextAlignment" Value="Right"/>
+			<Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+			<Setter Property="Height" Value="50"/>
+			<Setter Property="Width" Value="120"/>
+		</Style>
+		<!--	шаблоны для циферблата тахометра	-->
+		<Style x:Key="TachBarAS" TargetType="{x:Type Rectangle}">
+			<Setter Property="Fill" Value="#FFF2F2F2"/>
+			<Setter Property="Canvas.Left" Value="157.5"/>
+			<Setter Property="Canvas.Top" Value="303"/>
+			<Setter Property="RenderTransformOrigin" Value="0.5,-8.9375"/>
+			<Setter Property="Height" Value="16"/>
+			<Setter Property="Width" Value="5"/>
+			<Setter Property="RadiusX" Value="1"/>
+			<Setter Property="RadiusY" Value="1"/>
+		</Style>
+		<Style x:Key="TachBarBS" BasedOn="{StaticResource TachBarAS}">
+			<Setter Property="Canvas.Left" Value="158.5"/>
+			<Setter Property="Width" Value="3"/>
+		</Style>
+		<Style x:Key="TachBarCS" BasedOn="{StaticResource TachBarAS}">
+			<Setter Property="Canvas.Left" Value="159"/>
+			<Setter Property="Width" Value="2"/>
+			<Setter Property="RadiusX" Value="0.5"/>
+			<Setter Property="RadiusY" Value="0.5"/>
+		</Style>
+		<Style x:Key="TachBarDial" BasedOn="{StaticResource TachBarBS}">
+			<Setter Property="Canvas.Top" Value="45"/>
+			<Setter Property="RenderTransformOrigin" Value="0.5,1.0"/>
+			<Setter Property="Height" Value="115"/>
+		</Style>
+		<Style x:Key="TachFade" TargetType="{x:Type Path}">
+			<Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+			<Setter Property="Height" Value="320"/>
+			<Setter Property="Width" Value="320"/>
+		</Style>
+		<PathGeometry x:Key="TachFadeSegment">
+			<PathFigure StartPoint="160,301" IsClosed="True">
+				<ArcSegment Point="301,160" Size="141,141" SweepDirection="Counterclockwise" IsLargeArc="False" />
+				<LineSegment Point="160,160" />
+			</PathFigure>
+		</PathGeometry>
+        
+		<local:DigitalGaugeConfig x:Key="Config" HasClock="True" HasExternalTemp="True" UseDegreesF="False" UseMPH="False" UsePsi="True" MaxBoost="13" MinBoost="1" MaxSpeed="120" HasAbsLight="False" HasStmLight="True" HasTcsLight="True" HasGAccelX="False" HasGAccelY="False" HasShiftLights="True" HasTextTach="False" HasLapPlaceInfo="False" HasTextBoost="False" HasTextGAccel="False" HasTextOdometer="True" HasTextFuel="False" MaxFuel="20" MinGear="-1" MaxGear="6" MaxRpm="9000"></local:DigitalGaugeConfig>
+		
+		<Storyboard x:Key="Start Up Animation">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Start_Up_Mask">
+				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<!--	логика шкалы топлива	-->
+		<Storyboard x:Key="Fuel Gauge">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_1">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.005" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_2">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.083" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_3">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.167" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_4">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.25" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_5">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.333" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_6">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.417" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_7">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_8">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.583" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_9">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.667" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_10">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.75" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_11">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.833" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_12">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.917" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Fuel_Low">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.14" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+		<!--	логика лампы работающей стабы	-->
+		<Storyboard x:Key="ESP Flash" RepeatBehavior="Forever">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ESP_Light">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.25" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+		<!--	логика стандартного тахометра	-->
+		<Storyboard x:Key="Tach">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="Tach_Std_Needle">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="270"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="Rotate_Tach_Std_1">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="270"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="Rotate_Tach_Std_2">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.833" Value="225"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="Rotate_Tach_Std_3">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.778" Value="210"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="Rotate_Tach_Std_4">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.333" Value="90"/>
+			</DoubleAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Rotate_Tach_Std_1">
+				<DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.832" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Rotate_Tach_Std_2">
+				<DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.777" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Rotate_Tach_Std_3">
+				<DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.332" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="Tach_Std_Shift">
+				<EasingColorKeyFrame KeyTime="0:0:0" Value="Black"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.777" Value="Black"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.778" Value="#FFEB6F00"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.821" Value="#FFEB6F00"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.844" Value="Red"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Gear_For">
+				<EasingColorKeyFrame KeyTime="0:0:0" Value="#FFF2F2F2"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.777" Value="#FFF2F2F2"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.778" Value="#FF0D0D0D"/>
+			</ColorAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="Tach_Std_Fade">
+				<EasingDoubleKeyFrame KeyTime="0" Value="-95"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.111" Value="-90"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.556" Value="10"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="40"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<!--	логика смены индикатора передачи	-->
+		<Storyboard x:Key="Gear Analog">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Tach_Std_Shift">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.250" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Text_Gear_For">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.250" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Text_Gear_Rev">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.125" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+		
+	</Page.Resources>	
+	<Page.Triggers>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="LayoutRoot">
+			<BeginStoryboard Storyboard="{StaticResource Tach}"/>
+			<BeginStoryboard Storyboard="{StaticResource Gear Analog}"/>
+			<BeginStoryboard Storyboard="{StaticResource ESP Flash}"/>
+		</EventTrigger>
+	</Page.Triggers>
+
+	<Canvas x:Name="LayoutRoot" Background="Transparent" Width="1280" Height="720">
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="NightDaySplit">
+				<VisualState x:Name="Day"/>
+				<VisualState x:Name="Night"/>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		<Rectangle x:Name="Background_Black" Fill="Black" Height="720" Width="1280" Canvas.Left="0" Canvas.Top="0"/>
+
+		<!--	Дисплей мультимедийной системы	-->
+		<Image x:Name="Screen_Media" Width="1280" Height="720" Canvas.Left="480" Source="game:/media/cars/TOY_GR86_22/UI/Textures/TOY_GR86_22_Center.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+			<Image.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleY="0.4" ScaleX="0.4"/>
+					<RotateTransform Angle="-90"/>
+				</TransformGroup>
+			</Image.RenderTransform>
+		</Image>
+		<!--	Дисплеи климматической системы	-->
+		<Image x:Name="Screen_AC_Mode" Width="121.162" Height="136.309" Canvas.Left="872.92" Canvas.Top="12.713" Source="game:/media/cars/TOY_GR86_22/UI/Textures/TOY_GR86_22_AC_Dirrection.png" Stretch="Fill"/>
+		<Image x:Name="Screen_AC_Temp" Width="121.164" Height="136.309" Canvas.Left="706.233" Canvas.Top="13.678" Source="game:/media/cars/TOY_GR86_22/UI/Textures/TOY_GR86_22_AC_Temp.png" Stretch="Fill"/>
+		
+		<!--	Рабочие значения мультимедийной системы, когда-нибудь(с) поправлю темпертатуру	-->
+		<Canvas x:Name="Text" Height="366.501" Canvas.Left="64" Canvas.Top="171.332" Width="979">
+			<local:FastTextBlock x:Name="Text_External_Temp2" Text="{Binding ExternalTemp}" Height="11.665" Canvas.Left="923"   Canvas.Top="338.668" Width="32" FontFamily="Moire" FontSize="8" Foreground="White" TextAlignment="Right" RenderTransformOrigin="0.5,0.5">
+				<local:FastTextBlock.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="-90"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_Clock2" Text="{Binding Time}" Height="24.665" Canvas.Left="899"   Canvas.Top="168.668" Width="72" FontFamily="Moire" FontSize="20" Foreground="White" TextAlignment="Center" RenderTransformOrigin="0.5,0.5">
+				<local:FastTextBlock.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="-90"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+		</Canvas>
+		
+		<!--	Левая часть дисплея	с доп инфой (температура и вольтаж)	-->
+		<Canvas x:Name="Info_Display_Temp" Canvas.Left="85" Canvas.Top="260" Height="200" Width="200">
+			<Border Width="26" Height="26" Canvas.Left="84.5" Canvas.Top="165.5">
+				<Border.Clip>
+					<RectangleGeometry Rect="0,0,26,26"/>
+				</Border.Clip>
+				<Canvas>
+					<Canvas.RenderTransform>
+						<ScaleTransform ScaleY="0.65" ScaleX="0.65"/>
+					</Canvas.RenderTransform>
+					<Image Style="{StaticResource ImageDriver}" Canvas.Left="-206" Canvas.Top="-223"/>
+				</Canvas>
+			</Border>
+			<Canvas Height="200" Width="200">
+				<Rectangle Fill="#FFF2F8F8" Height="5" Width="3.5" Canvas.Top="38" Canvas.Left="88" RadiusX="0.5" RadiusY="0.5"/>
+				<Rectangle Fill="#FFF2F8F8" Height="5" Width="3.5" Canvas.Top="38" Canvas.Left="97" RadiusX="0.5" RadiusY="0.5"/>
+				<Rectangle Fill="#FFF2F8F8" Height="13" Width="20" Canvas.Top="39.5" Canvas.Left="84.5" RadiusX="1" RadiusY="1"/>
+				<Rectangle Fill="Black" Height="9" Width="16" Canvas.Top="41.5" Canvas.Left="86.5" RadiusX="0.5" RadiusY="0.5"/>
+				<Rectangle Fill="#FFF2F8F8" Height="1.5" Width="4.5" Canvas.Top="44" Canvas.Left="87.5" RadiusX="0.5" RadiusY="0.5"/>
+				<Rectangle Fill="#FFF2F8F8" Height="1.5" Width="4.5" Canvas.Top="44" Canvas.Left="97" RadiusX="0.5" RadiusY="0.5"/>
+				<Rectangle Fill="#FFF2F8F8" Height="4.5" Width="1.5" Canvas.Top="42.5" Canvas.Left="98.5" RadiusX="0.5" RadiusY="0.5"/>
+			</Canvas>
+			<Canvas x:Name="MFD_Volt_Bar" Canvas.Left="15.5" Canvas.Top="57" Height="60" Width="158">
+				<Rectangle Fill="#FFF2F8F8" Height="39" Width="3.5" Canvas.Left="0" RadiusX="1" RadiusY="1"/>
+				<Rectangle Fill="#FFF2F8F8" Height="39" Width="3.5" Canvas.Left="154.5" RadiusX="1" RadiusY="1"/>
+				<Rectangle Fill="#FFF2F8F8" Height="3" Width="158" Canvas.Top="37.5" RadiusX="1" RadiusY="1"/>
+				<Rectangle Fill="#FF2E4046" Height="35" Width="148" Canvas.Left="5" Canvas.Top="1" RadiusX="1" RadiusY="1"/>
+				<Rectangle Fill="#FFF2F8F8" Height="36.5" Width="100" Canvas.Left="4.2" Canvas.Top="0" RadiusX="1" RadiusY="1"/>
+				<local:FastTextBlock Text="10" Style="{StaticResource TachFontStyle}" Width="40" FontSize="22" Canvas.Left="-15" Canvas.Top="35">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="0.6" ScaleY="0.7"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="12" Style="{StaticResource TachFontStyle}" Width="40" FontSize="22" Canvas.Left="32" Canvas.Top="35">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="0.6" ScaleY="0.7"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="14" Style="{StaticResource TachFontStyle}" Width="40" FontSize="22" Canvas.Left="84" Canvas.Top="35">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="0.6" ScaleY="0.7"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="16V" Style="{StaticResource TachFontStyle}" Width="50" FontSize="22" Canvas.Left="135" Canvas.Top="35">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="0.6" ScaleY="0.7"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+			</Canvas>
+			<Canvas x:Name="MFD_TempOil_Bar" Canvas.Left="15.5" Canvas.Top="120.5" Height="60" Width="158">
+				<Rectangle Fill="#FFF2F8F8" Height="39" Width="3.5" Canvas.Left="0" RadiusX="1" RadiusY="1"/>
+				<Rectangle Fill="#FFF2F8F8" Height="39" Width="3.5" Canvas.Left="154.5" RadiusX="1" RadiusY="1"/>
+				<Rectangle Fill="#FFF2F8F8" Height="3" Width="158" Canvas.Top="37.5" RadiusX="1" RadiusY="1"/>
+				<Rectangle Fill="#FF2E4046" Height="35" Width="148" Canvas.Left="5" Canvas.Top="1" RadiusX="1" RadiusY="1"/>
+				<Rectangle Fill="#FFF2F8F8" Height="36.5" Width="58" Canvas.Left="4.2" Canvas.Top="0" RadiusX="1" RadiusY="1"/>
+				<local:FastTextBlock Text="50" Style="{StaticResource TachFontStyle}" Width="50" FontSize="22" Canvas.Left="-22" Canvas.Top="35" TextAlignment="Right">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="0.6" ScaleY="0.7"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="90" Style="{StaticResource TachFontStyle}" Width="50" FontSize="22" Canvas.Left="23.5" Canvas.Top="35" TextAlignment="Right">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="0.6" ScaleY="0.7"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="130" Style="{StaticResource TachFontStyle}" Width="50" FontSize="22" Canvas.Left="78" Canvas.Top="35" TextAlignment="Right">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="0.6" ScaleY="0.7"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="170" Style="{StaticResource TachFontStyle}" Width="50" FontSize="22" Canvas.Left="128" Canvas.Top="35" TextAlignment="Right">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="0.6" ScaleY="0.7"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<Border Canvas.Left="166.5" Canvas.Top="30" Width="6" Height="50">
+					<Border.Clip>
+						<RectangleGeometry Rect="0,0,6,50"/>
+					</Border.Clip>
+					<Canvas>
+						<local:FastTextBlock Text="°" Style="{StaticResource LCDFont}" Canvas.Left="-13.5" TextAlignment="Right">
+							<local:FastTextBlock.RenderTransform>
+								<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+							</local:FastTextBlock.RenderTransform>
+						</local:FastTextBlock>
+					</Canvas>
+				</Border>
+				<local:FastTextBlock Text="C" Style="{StaticResource TachFontStyle}" Width="28" FontSize="22" Canvas.Left="157" Canvas.Top="35" TextAlignment="Right">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="0.6" ScaleY="0.7"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+			</Canvas>
+		</Canvas>
+		
+		<!--	Центральная секция (тахометр, спидометр, индикатор передачи) Обычный режим	-->
+		<Canvas x:Name="Tach_Standard" Width="320" Height="320" Canvas.Left="322" Canvas.Top="195" RenderTransformOrigin="0.5,0.5">
+			<Canvas.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="1.02" ScaleY="1.115"/>
+				</TransformGroup>
+			</Canvas.RenderTransform>
+			<Ellipse x:Name="Tach_Std_Back_1" Fill="Black" Width="320" Height="320"/>
+			<!--	Основые деления (кратные 1000)	-->
+			<Canvas x:Name="Tach_Std_Bar_A" Width="320" Height="320">
+				<Rectangle Style="{StaticResource TachBarAS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="0"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarAS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="30"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarAS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="60"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarAS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="90"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarAS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="120"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarAS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="150"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarAS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="180"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarAS}" Fill="#FFEB6F00">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="210"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarAS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="240"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarAS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="270"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+			</Canvas>
+			<!--	Дополнительные деления (кратные 500)	-->
+			<Canvas x:Name="Tach_Std_Bar_B" Width="320" Height="320">
+				<Rectangle Style="{StaticResource TachBarBS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="15"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarBS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="45"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarBS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="75"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarBS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="105"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarBS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="135"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarBS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="165"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarBS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="195"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarBS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="225"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarBS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="255"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+			</Canvas>
+			<!--	Мелкие деления (кратные 100)	-->
+			<Canvas x:Name="Tach_Std_Bar_C" Width="320" Height="320">
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="3"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="6"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="9"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="12"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    500 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="18"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="21"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="24"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="27"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    1000 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="33"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="36"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="39"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="42"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    1500 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="48"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="51"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="54"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="57"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    2000 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="63"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="66"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="69"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="72"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    2500 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="78"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="81"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="84"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="87"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    3000 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="93"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="96"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="99"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="102"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    3500 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="108"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="111"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="114"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="117"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    4000 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="123"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="126"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="129"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="132"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    4500 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="138"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="141"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="144"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="147"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    5000 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="153"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="156"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="159"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="162"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    5500 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="168"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="171"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="174"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="177"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    6000 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="183"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="186"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="189"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="192"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    6500 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="198"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="201"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="204"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="207"/>
+					</Rectangle.RenderTransform>
+				</Rectangle> 
+				<!--    7000 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="#FFEB6F00">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="213"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="#FFEB6F00">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="216"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="#FFEB6F00">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="219"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="#FFEB6F00">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="222"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    7500 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="228"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="231"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="234"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="237"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    8000 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="243"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="246"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="249"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="252"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<!--    8500 rpm    -->
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="258"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="261"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="264"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarCS}" Fill="Red">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="267"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+			</Canvas>
+			<!--    Заполняющаяся полоса    -->
+			<Canvas x:Name="Tach_Std_Fill" Width="320" Height="320">
+				<Path x:Name="Rotate_Tach_Std_1" Fill="Red" Width="320" Height="320" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
+					<Path.Data>
+						<PathGeometry>
+							<PathFigure StartPoint="160,301" IsClosed="True">
+								<ArcSegment Point="301,160" Size="141,141" SweepDirection="Counterclockwise" IsLargeArc="False" />
+								<LineSegment Point="160,160"/>
+							</PathFigure>
+						</PathGeometry>
+					</Path.Data>
+					<Path.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform/>
+							<SkewTransform/>
+							<RotateTransform Angle="0"/>
+							<TranslateTransform/>
+						</TransformGroup>
+					</Path.RenderTransform>
+				</Path>
+				<Path x:Name="Rotate_Tach_Std_2" Fill="#FFEB6F00" Width="320" Height="320" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
+					<Path.Data>
+						<PathGeometry>
+							<PathFigure StartPoint="160,301" IsClosed="True">
+								<ArcSegment Point="301,160" Size="141,141" SweepDirection="Counterclockwise" IsLargeArc="False" />
+								<LineSegment Point="160,160" />
+							</PathFigure>
+						</PathGeometry>
+					</Path.Data>
+					<Path.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform/>
+							<SkewTransform/>
+							<RotateTransform Angle="0"/>
+							<TranslateTransform/>
+						</TransformGroup>
+					</Path.RenderTransform>
+				</Path>
+				<Path x:Name="Rotate_Tach_Std_3" Fill="#FFF2F2F2" Width="320" Height="320" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
+					<Path.Data>
+						<PathGeometry>
+							<PathFigure StartPoint="160,301" IsClosed="True">
+								<ArcSegment Point="160,19" Size="141,141" SweepDirection="Counterclockwise" IsLargeArc="False" />
+								<LineSegment Point="160,160" />
+							</PathFigure>
+						</PathGeometry>
+					</Path.Data>
+					<Path.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform/>
+							<SkewTransform/>
+							<RotateTransform Angle="0"/>
+							<TranslateTransform/>
+						</TransformGroup>
+					</Path.RenderTransform>
+				</Path>
+				<Path x:Name="Rotate_Tach_Std_4" Fill="#FFF2F2F2" Width="320" Height="320" RenderTransformOrigin="0.5,0.5" Visibility="Visible">
+					<Path.Data>
+						<PathGeometry>
+							<PathFigure StartPoint="160,301" IsClosed="True">
+								<ArcSegment Point="301,160" Size="141,141" SweepDirection="Counterclockwise" IsLargeArc="False" />
+								<LineSegment Point="160,160" />
+							</PathFigure>
+						</PathGeometry>
+					</Path.Data>
+					<Path.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform/>
+							<SkewTransform/>
+							<RotateTransform Angle="0"/>
+							<TranslateTransform/>
+						</TransformGroup>
+					</Path.RenderTransform>
+				</Path>
+				<!--    Затенение полосы, блять нахера я это делаю градиент мать его вручную, плейграунд идите в жопу ленивые утырки со своим кастрированным синтаксисом	-->
+				<Canvas x:Name="Tach_Std_Fade" Width="320" Height="320" RenderTransformOrigin="0.5,0.5">
+					<Canvas.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform/>
+							<SkewTransform/>
+							<RotateTransform Angle="-95"/>
+							<TranslateTransform/>
+						</TransformGroup>
+					</Canvas.RenderTransform>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFEFEFEF" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="8"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFEDEDED" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="7"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFEAEAEA" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="6"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFE8E8E8" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="95"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFE5E5E5" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="94"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFE2E2E2" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="93"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFE0E0E0" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="92"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFDDDDDD" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="91"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFDBDBDB" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="90"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFD8D8D8" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="89"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFD6D6D6" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="88"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFD3D3D3" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="87"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFD1D1D1" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="86"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFCECECE" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="85"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFCCCCCC" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="84"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFC9C9C9" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="83"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFC6C6C6" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="82"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFC4C4C4" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="81"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFC1C1C1" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="80"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFBFBFBF" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="79"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFBCBCBC" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="78"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFBABABA" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="77"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFB7B7B7" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="76"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFB5B5B5" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="75"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFB2B2B2" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="74"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFAFAFAF" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="73"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFADADAD" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="72"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFAAAAAA" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="71"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFA8A8A8" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="70"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFA5A5A5" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="69"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFA3A3A3" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="68"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FFA0A0A0" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="67"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF9E9E9E" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="66"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF9B9B9B" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="65"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF999999" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="64"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF969696" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="53"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF939393" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="62"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF919191" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="61"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF8E8E8E" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="60"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF8C8C8C" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="59"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF898989" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="58"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF878787" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="57"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF848484" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="56"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF828282" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="55"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF7F7F7F" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="54"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF7C7C7C" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="53"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF7A7A7A" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="52"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF757575" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="51"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF727272" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="50"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF707070" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="49"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF6D6D6D" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="48"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF6B6B6B" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="47"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF686868" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="46"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF666666" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="45"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF636363" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="44"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF606060" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="42"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF5E5E5E" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="42"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF5B5B5B" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="41"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF595959" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="40"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF565656" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="39"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF545454" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="38"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF515151" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="37"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF4F4F4F" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="36"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF4C4C4C" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="35"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF494949" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="34"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF474747" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="33"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF444444" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="32"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF424242" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="31"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF3F3F3F" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="30"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF3D3D3D" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="29"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF3A3A3A" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="28"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF383838" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="27"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF353535" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="26"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF333333" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="25"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF303030" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="24"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF2D2D2D" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="23"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF2B2B2B" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="22"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF282828" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="21"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF262626" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="20"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF232323" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="19"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF212121" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="18"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF1E1E1E" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="17"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF1C1C1C" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="16"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF191919" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="15"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF161616" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="14"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF141414" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="13"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF111111" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="12"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF0F0F0F" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="11"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF0C0C0C" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="10"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF0A0A0A" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="9"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF070707" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="8"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF050505" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="7"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF020202" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="6"/>
+						</Path.RenderTransform>
+					</Path>
+					<Path Data="{StaticResource TachFadeSegment}" Fill="#FF000000" Style="{StaticResource TachFade}">
+						<Path.RenderTransform>
+							<RotateTransform Angle="5"/>
+						</Path.RenderTransform>
+					</Path>
+				</Canvas>
+				<Ellipse Fill="Black" Width="236" Height="236" Canvas.Left="42" Canvas.Top="42"/>
+				<Border Canvas.Left="160" Canvas.Top="159" Width="142" Height="143">
+					<Border.Clip>
+						<RectangleGeometry Rect="0,0,142,143"/>
+					</Border.Clip>
+					<Canvas Canvas.Left="160" Canvas.Top="159" Width="142" Height="143">
+						<Ellipse Fill="Black" Width="284" Height="284" Canvas.Left="-142" Canvas.Top="-141"/>
+					</Canvas>
+				</Border>
+				<Rectangle Fill="Black" Height="27" Width="21" Canvas.Left="140" Canvas.Top="275">
+					<Rectangle.OpacityMask>
+						<LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+							<GradientStop Color="#00000000" Offset="0.0" />
+							<GradientStop Color="#FF000000" Offset="0.9" />
+							<GradientStop Color="#FF000000" Offset="1.0" />
+						</LinearGradientBrush>
+					</Rectangle.OpacityMask>
+				</Rectangle>
+			</Canvas>
+			<!--    Циферблат   -->
+			<Canvas x:Name="Tach_Std_Dial"  Width="320" Height="320">
+				<Ellipse Fill="#FFF2F2F2" Width="232" Height="232" Canvas.Left="44" Canvas.Top="44"/>
+				<Ellipse Fill="Black" Width="228" Height="228" Canvas.Left="46" Canvas.Top="46"/>
+				<!--    Деления циферблата   -->
+				<Rectangle Style="{StaticResource TachBarDial}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="-180"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarDial}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="-150"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarDial}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="-120"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarDial}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="-90"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarDial}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="-60"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarDial}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="-30"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarDial}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="0"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarDial}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="30"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarDial}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="60"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Rectangle Style="{StaticResource TachBarDial}">
+					<Rectangle.RenderTransform>
+						<RotateTransform Angle="90"/>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+				<Ellipse Fill="Black" Width="216" Height="216" Canvas.Left="52" Canvas.Top="52"/>
+				<Rectangle Fill="#FFF2F2F2" Height="2.5" Width="126" Canvas.Left="97" Canvas.Top="113" RadiusX="0.5" RadiusY="0.5"/>
+				<Rectangle Fill="#FFF2F2F2" Height="2.5" Width="126" Canvas.Left="97" Canvas.Top="193" RadiusX="0.5" RadiusY="0.5"/>
+				<!--    Числа циферблата   -->
+				<local:FastTextBlock Text="0" Style="{StaticResource TachFontStyle}" Canvas.Left="147.5" Canvas.Top="240.5">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="1.05"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="1" Style="{StaticResource TachFontStyle}" Canvas.Left="100" Canvas.Top="229">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="1.05"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="2" Style="{StaticResource TachFontStyle}" Canvas.Left="64" Canvas.Top="192">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="1.05"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="3" Style="{StaticResource TachFontStyle}" Canvas.Left="50" Canvas.Top="145">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="1.05"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="4" Style="{StaticResource TachFontStyle}" Canvas.Left="64" Canvas.Top="97">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="1.05"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="5" Style="{StaticResource TachFontStyle}" Canvas.Left="98" Canvas.Top="64">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="1.05"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="6" Style="{StaticResource TachFontStyle}" Canvas.Left="147.5" Canvas.Top="48.5">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="1.05"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="7" Style="{StaticResource TachFontStyle}" Canvas.Left="199" Canvas.Top="64">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="1.05"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="8" Style="{StaticResource TachFontStyle}" Canvas.Left="230" Canvas.Top="97">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="1.05"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock Text="9" Style="{StaticResource TachFontStyle}" Canvas.Left="245" Canvas.Top="145">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="1.1"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<!--    х1000 об/мин   -->
+				<Canvas Width="320" Height="320">
+					<local:FastTextBlock Text="X" Style="{StaticResource TachFontStyle}" FontSize="18" Canvas.Left="157.5" Canvas.Top="299">
+						<local:FastTextBlock.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+								<RotateTransform Angle="-5"/>
+							</TransformGroup>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+					<local:FastTextBlock Text="1" Style="{StaticResource TachFontStyle}" FontSize="18" Canvas.Left="164.5" Canvas.Top="298">
+						<local:FastTextBlock.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="0.78" ScaleY="0.74"/>
+								<RotateTransform Angle="-8"/>
+							</TransformGroup>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+					<local:FastTextBlock Text="0" Style="{StaticResource TachFontStyle}" FontSize="18" Canvas.Left="171" Canvas.Top="297.2">
+						<local:FastTextBlock.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="0.78" ScaleY="0.74"/>
+								<RotateTransform Angle="-9"/>
+							</TransformGroup>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+					<local:FastTextBlock Text="0" Style="{StaticResource TachFontStyle}" FontSize="18" Canvas.Left="180" Canvas.Top="295.5">
+						<local:FastTextBlock.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="0.78" ScaleY="0.74"/>
+								<RotateTransform Angle="-10.5"/>
+							</TransformGroup>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+					<local:FastTextBlock Text="0" Style="{StaticResource TachFontStyle}" FontSize="18" Canvas.Left="189" Canvas.Top="293.7">
+						<local:FastTextBlock.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="0.78" ScaleY="0.74"/>
+								<RotateTransform Angle="-11.7"/>
+							</TransformGroup>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+					<local:FastTextBlock Text="r" Style="{StaticResource TachFontStyle}" FontFamily="DG1_Arial" FontSize="18" Canvas.Left="196" Canvas.Top="290.5">
+						<local:FastTextBlock.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="0.78" ScaleY="0.74"/>
+								<RotateTransform Angle="-14"/>
+							</TransformGroup>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+					<local:FastTextBlock Text="/" Style="{StaticResource TachFontStyle}" FontFamily="DG1_Arial" FontSize="18" Canvas.Left="200.5" Canvas.Top="289.0">
+						<local:FastTextBlock.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="0.78" ScaleY="0.74"/>
+								<RotateTransform Angle="-20"/>
+							</TransformGroup>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+					<local:FastTextBlock Text="min" Style="{StaticResource TachFontStyle}" Width="30" FontFamily="DG1_Arial" FontSize="18" Canvas.Left="209.5" Canvas.Top="284.2">
+						<local:FastTextBlock.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
+								<RotateTransform Angle="-22"/>
+							</TransformGroup>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+				</Canvas>
+				<!--    Индикатор смены передачи   -->
+				<Rectangle x:Name="Tach_Std_Shift" Fill="Black" Height="30" Width="70" Canvas.Left="125" Canvas.Top="205"/>
+			</Canvas>
+			<!--    Стрелка тахометра   -->
+			<Canvas x:Name="Tach_Std_Needle" Width="320" Height="320" RenderTransformOrigin="0.5,0.5">
+				<Canvas.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="0"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Canvas.RenderTransform>
+				<Rectangle Fill="Black" Height="30" Width="8" Canvas.Left="156" Canvas.Top="273" RadiusX="2.5" RadiusY="2.5"/>
+				<Rectangle Fill="#FFF2F2F2" Height="26.5" Width="5" Canvas.Left="157.5" Canvas.Top="274.5" RadiusX="1.5" RadiusY="1.5"/>
+			</Canvas>
+			<!--    Рабочие значения   -->
+			<Canvas x:Name="Tach_Std_Text" Width="320" Height="320">
+				<local:FastTextBlock x:Name="Text_Speed_Unit" Text="km/h" Width="70" Height="22" Canvas.Left="153" Canvas.Top="166" FontFamily="DG1_Arial" FontSize="22" TextAlignment="Right" Foreground="#FFF2F2F2" RenderTransformOrigin="1.0,0.5">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="1.1"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock x:Name="Text_Speed" Text="{Binding Speed}" Style="{StaticResource TachFontStyle}" FontSize="60" Width="140" Height="80" Canvas.Left="90" Canvas.Top="110">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="0.96"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock x:Name="Text_Gear_For" Text="{Binding Gear}" Style="{StaticResource TachFontStyle}" FontSize="30" Width="70" Height="30" Canvas.Left="125" Canvas.Top="202" Visibility="Hidden">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="0.96"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+				<local:FastTextBlock x:Name="Text_Gear_Rev" Text="{Binding Gear}" Style="{StaticResource TachFontStyle}" Foreground="#FFFD2800" FontSize="30" Width="70" Height="30" Canvas.Left="125" Canvas.Top="202" Visibility="Hidden">
+					<local:FastTextBlock.RenderTransform>
+						<ScaleTransform ScaleX="0.96"/>
+					</local:FastTextBlock.RenderTransform>
+				</local:FastTextBlock>
+			</Canvas>
+		</Canvas>
+		
+		<!--	Правый монохром дисплей	-->
+		<Canvas x:Name="LCD_Display" Canvas.Left="715" Canvas.Top="260" Height="200" Width="188">
+			<!--	Полоски топлива и температуры	-->
+			<Border Width="26" Height="26" Canvas.Left="80.5" Canvas.Top="31">
+				<Border.Clip>
+					<RectangleGeometry Rect="0,0,26,26"/>
+				</Border.Clip>
+				<Canvas Canvas.Left="80.5" Canvas.Top="31" Width="26" Height="26">
+					<Canvas.RenderTransform>
+						<ScaleTransform ScaleY="0.67" ScaleX="0.67"/>
+					</Canvas.RenderTransform>
+					<Image Style="{StaticResource ImageDriver}" Canvas.Left="-67" Canvas.Top="-222"/>
+				</Canvas>
+			</Border>
+			<Border Width="20" Height="26" Canvas.Left="85" Canvas.Top="166.5">
+				<Border.Clip>
+					<RectangleGeometry Rect="0,0,20,26"/>
+				</Border.Clip>
+				<Canvas Canvas.Left="85" Canvas.Top="166.5" Width="20" Height="26">
+					<Canvas.RenderTransform>
+						<ScaleTransform ScaleY="0.47" ScaleX="0.47"/>
+					</Canvas.RenderTransform>
+					<Image Style="{StaticResource ImageIcon}" Canvas.Left="-397" Canvas.Top="-231"/>
+				</Canvas>
+			</Border>
+			<Path Fill="#FFEFFAED" Data="M 105 174 L 112 179 L 105 184"/>
+			<Canvas x:Name="LCD_Fuel_Graph" Canvas.Left="22" Canvas.Top="123" Height="42" Width="140">
+				<Rectangle Fill="#FFEFFAED" Height="42" Width="3" Canvas.Left="0" Canvas.Top="-1"/>
+				<Rectangle Fill="#FFEFFAED" Height="42" Width="3" Canvas.Left="137" Canvas.Top="-1"/>
+				<Rectangle Fill="#FFEFFAED" Height="4" Width="3" Canvas.Left="68.5" Canvas.Top="37"/>
+				<Rectangle Fill="#FFEFFAED" Height="3" Width="140" Canvas.Left="0" Canvas.Top="38.5"/>
+				<Rectangle x:Name="Fuel_1" Style="{StaticResource LCDBar}" Canvas.Left="4"/>
+				<Rectangle x:Name="Fuel_2" Style="{StaticResource LCDBar}" Canvas.Left="15.136"/>
+				<Rectangle x:Name="Fuel_3" Style="{StaticResource LCDBar}" Canvas.Left="26.273"/>
+				<Rectangle x:Name="Fuel_4" Style="{StaticResource LCDBar}" Canvas.Left="37.409"/>
+				<Rectangle x:Name="Fuel_5" Style="{StaticResource LCDBar}" Canvas.Left="48.545"/>
+				<Rectangle x:Name="Fuel_6" Style="{StaticResource LCDBar}" Canvas.Left="59.682"/>
+				<Rectangle x:Name="Fuel_7" Style="{StaticResource LCDBar}" Canvas.Left="70.818"/>
+				<Rectangle x:Name="Fuel_8" Style="{StaticResource LCDBar}" Canvas.Left="81.955"/>
+				<Rectangle x:Name="Fuel_9" Style="{StaticResource LCDBar}" Canvas.Left="93.091"/>
+				<Rectangle x:Name="Fuel_10" Style="{StaticResource LCDBar}" Canvas.Left="104.227"/>
+				<Rectangle x:Name="Fuel_11" Style="{StaticResource LCDBar}" Canvas.Left="115.364"/>
+				<Rectangle x:Name="Fuel_12" Style="{StaticResource LCDBar}" Canvas.Left="126.5"/>
+			</Canvas>
+			<Canvas x:Name="LCD_Temp_Graph" Canvas.Left="22" Canvas.Top="57" Height="42" Width="140">
+				<Rectangle Fill="#FFEFFAED" Height="42" Width="3" Canvas.Left="0" Canvas.Top="-1"/>
+				<Rectangle Fill="#FFEFFAED" Height="42" Width="3" Canvas.Left="137" Canvas.Top="-1"/>
+				<Rectangle Fill="#FFEFFAED" Height="4" Width="3" Canvas.Left="68.5" Canvas.Top="37"/>
+				<Rectangle Fill="#FFEFFAED" Height="3" Width="140" Canvas.Left="0" Canvas.Top="38.5"/>
+				<Rectangle x:Name="Temp_1" Style="{StaticResource LCDBar}" Canvas.Left="4"/>
+				<Rectangle x:Name="Temp_2" Style="{StaticResource LCDBar}" Canvas.Left="15.136"/>
+				<Rectangle x:Name="Temp_3" Style="{StaticResource LCDBar}" Canvas.Left="26.273"/>
+				<Rectangle x:Name="Temp_4" Style="{StaticResource LCDBar}" Canvas.Left="37.409"/>
+				<Rectangle x:Name="Temp_5" Style="{StaticResource LCDBar}" Canvas.Left="48.545"/>
+				<Rectangle x:Name="Temp_6" Style="{StaticResource LCDBar}" Canvas.Left="59.682" Visibility="Visible"/>
+				<Rectangle x:Name="Temp_7" Style="{StaticResource LCDBar}" Canvas.Left="70.818"/>
+				<Rectangle x:Name="Temp_8" Style="{StaticResource LCDBar}" Canvas.Left="81.955"/>
+				<Rectangle x:Name="Temp_9" Style="{StaticResource LCDBar}" Canvas.Left="93.091"/>
+				<Rectangle x:Name="Temp_10" Style="{StaticResource LCDBar}" Canvas.Left="104.227"/>
+				<Rectangle x:Name="Temp_11" Style="{StaticResource LCDBar}" Canvas.Left="115.364"/>
+				<Rectangle x:Name="Temp_12" Style="{StaticResource LCDBar}" Canvas.Left="126.5"/>
+			</Canvas>
+			<!--	Статичные значения	-->
+			<local:FastTextBlock Text="OUT TEMP" Style="{StaticResource LCDFont}" Width="120" Canvas.Left="-10" Canvas.Top="-2" FontSize="20">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.74" ScaleY="0.85"/>
+				</local:FastTextBlock.RenderTransform>    
+			</local:FastTextBlock>
+			<local:FastTextBlock Text="C" Style="{StaticResource LCDFont}" Canvas.Top="65.5">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.8"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock Text="H" Style="{StaticResource LCDFont}" Canvas.Left="166" Canvas.Top="65.5">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.8"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock Text="E" Style="{StaticResource LCDFont}" Canvas.Top="131.5">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.8"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock Text="F" Style="{StaticResource LCDFont}" Canvas.Left="166" Canvas.Top="131.5">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.8"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<Border Canvas.Left="52" Canvas.Top="9" Width="20" Height="50">
+				<Border.Clip>
+					<RectangleGeometry Rect="0,0,24,50"/>
+				</Border.Clip>
+				<Canvas>
+					<local:FastTextBlock x:Name="Text_LCD_Temp_C" Text="°C" Style="{StaticResource LCDFont}" Width="50" Canvas.Left="-24" TextAlignment="Right">
+						<local:FastTextBlock.RenderTransform>
+							<ScaleTransform ScaleX="0.58" ScaleY="0.65"/>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+					<local:FastTextBlock x:Name="Text_LCD_Temp_F" Text="°F" Style="{StaticResource LCDFont}" Width="50" Canvas.Left="-26" Canvas.Top="11" TextAlignment="Right" Visibility="Hidden">
+						<local:FastTextBlock.RenderTransform>
+							<ScaleTransform ScaleX="0.62" ScaleY="0.65"/>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+				</Canvas>
+			</Border>
+			<!--	Рабочие значения	-->
+			<Border x:Name="Text_LCD_Temp" Canvas.Left="12" Canvas.Top="12" Width="40" Height="50">
+				<Border.Clip>
+					<RectangleGeometry Rect="0,0,40,50"/>
+				</Border.Clip>
+				<Canvas>
+					<local:FastTextBlock Text="{Binding ExternalTemp}" Style="{StaticResource LCDFontDigital}" Canvas.Left="-53">
+						<local:FastTextBlock.RenderTransform>
+							<ScaleTransform ScaleX="0.9"/>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+				</Canvas>
+			</Border>
+			<local:FastTextBlock x:Name="Text_LCD_Clock" Text="{Binding Time}" Style="{StaticResource LCDFontDigital}" Canvas.Left="59" Canvas.Top="12">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.9"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+		</Canvas>
+		
+		<!--	Остальные статичные элементы	-->
+		<Border x:Name="Fuel_Low" Width="32" Height="38" Canvas.Left="738" Canvas.Top="513" Visibility="Hidden">
+			<Border.Clip>
+				<RectangleGeometry Rect="0,0,32,38"/>
+			</Border.Clip>
+			<Canvas Canvas.Left="738" Canvas.Top="512" Width="32" Height="38">
+				<Canvas.RenderTransform>
+					<ScaleTransform ScaleY="0.85" ScaleX="0.85"/>
+				</Canvas.RenderTransform>
+				<Rectangle Canvas.Left="-399" Canvas.Top="-234" Fill="#FFFF8A00" Width="512" Height="512">
+					<Rectangle.OpacityMask>
+						<ImageBrush ImageSource="game:/media/cars/_library/Textures/z_sub_wrxsti_alt_001/symbols/swatches/sub_wrxsti_15_symbols_basecoloralpha_15ewu0g.png"/>
+					</Rectangle.OpacityMask>
+				</Rectangle>
+			</Canvas>
+		</Border>
+		<Border x:Name="ESP_OFF" Width="36" Height="50" Canvas.Left="815" Canvas.Top="502" Visibility="Hidden">
+			<Border.Clip>
+				<RectangleGeometry Rect="0,0,36,50"/>
+			</Border.Clip>
+			<Canvas Width="36" Height="50" Canvas.Left="815" Canvas.Top="502">
+				<Canvas.RenderTransform>
+					<ScaleTransform ScaleY="0.9" ScaleX="0.75"/>
+				</Canvas.RenderTransform>
+				<Rectangle Canvas.Left="-397" Canvas.Top="-167" Fill="#FFFF8A00" Width="512" Height="512">
+					<Rectangle.OpacityMask>
+						<ImageBrush ImageSource="game:/media/cars/_library/Textures/z_sub_wrxsti_alt_001/symbols/swatches/sub_wrxsti_15_symbols_basecoloralpha_15ewu0g.png"/>
+					</Rectangle.OpacityMask>
+				</Rectangle>
+			</Canvas>
+		</Border>
+		<Canvas x:Name="ESP_Light" Canvas.Left="548" Canvas.Top="136" Width="30" Height="38">
+			<Canvas.RenderTransform>
+				<ScaleTransform ScaleY="0.87" ScaleX="0.75"/>
+			</Canvas.RenderTransform>
+			<Canvas.Style>
+				<Style TargetType="Canvas">
+					<Setter Property="Opacity" Value="0"/>
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding ShowSTM}" Value="True">
+							<Setter Property="Opacity" Value="1" />
+						</DataTrigger>
+						<DataTrigger Binding="{Binding ShowTCS}" Value="True">
+							<Setter Property="Opacity" Value="1" />
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Canvas.Style>
+			<Rectangle Fill="#FFFF8A00" Canvas.Left="-1" Width="32" Height="38" RadiusX="4" RadiusY="4"/>
+			<Border Width="28" Height="32">
+				<Border.Clip>
+					<RectangleGeometry Rect="0,0,28,32"/>
+				</Border.Clip>
+				<Canvas>
+					<Canvas.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform ScaleY="0.87" ScaleX="0.75"/>
+						</TransformGroup>
+					</Canvas.RenderTransform>
+					<Rectangle Canvas.Left="-398" Canvas.Top="-165" Fill="#FF121204" Width="512" Height="512">
+						<Rectangle.OpacityMask>
+							<ImageBrush ImageSource="game:/media/cars/_library/Textures/z_sub_wrxsti_alt_001/symbols/swatches/sub_wrxsti_15_symbols_basecoloralpha_15ewu0g.png"/>
+						</Rectangle.OpacityMask>
+					</Rectangle>
+				</Canvas>
+			</Border>
+		</Canvas>
+		<Canvas x:Name="Odometer" Width="150" Height="50" Canvas.Left="120" Canvas.Top="500">
+			<local:FastTextBlock x:Name="Text_ODO" Text="ODO" Style="{StaticResource TachFontStyle}" Width="45" Canvas.Left="5" Canvas.Top="20" FontSize="18">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.8"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_Odometer_Unit" Text="km" Width="50" Height="30" Canvas.Left="124" Canvas.Top="18" FontFamily="Arial" FontSize="18" TextAlignment="Left" Foreground="#FFF2F2F2" RenderTransformOrigin="0.0,0.5">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.9"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<Border Canvas.Left="68" Canvas.Top="17" Width="56" Height="30">
+				<Border.Clip>
+					<RectangleGeometry Rect="0,0,56,30"/>
+				</Border.Clip>
+				<Canvas>
+					<local:FastTextBlock x:Name="Text_Odometer" Text="{Binding Odometer}" Style="{StaticResource TachFontStyle}" Width="125" Canvas.Left="-51" FontSize="22" TextAlignment="Right" RenderTransformOrigin="1.0,0.5">
+						<local:FastTextBlock.RenderTransform>
+							<ScaleTransform ScaleX="0.88"/>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+				</Canvas>
+			</Border>
+		</Canvas>
+		
+		<Rectangle x:Name="Start_Up_Mask" Fill="Black" Height="668" Stroke="Black" Width="1186" Canvas.Left="58" Canvas.Top="53" Opacity="0"/>
+		
+		<local:StoryboardController SeekPct="{Binding Fuel}" Target="{StaticResource Fuel Gauge}"/>
+		<local:StoryboardController SeekPct="{Binding Tach}" Target="{StaticResource Tach}"/>
+		<local:StoryboardController SeekPct="{Binding AnalogGear}" Target="{StaticResource Gear Analog}"/>
+		
+	</Canvas>
+</Page>

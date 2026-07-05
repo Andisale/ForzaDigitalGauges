@@ -1,0 +1,14 @@
+- 2026-07-05 -
+
+Nissan Skyline GT-R V-Spec II '00
+- more accurate looking odometer
+- green fill for MFD gauges
+
+Toyota GR86 '22
+- complete new scratch made instrument cluster with 2 modes: Normal (circle tacho) and Track (inline tacho)
+  available in metric (km/h + C) and imperial (mph + F)
+
+Subaru BRZ '22
+- complete new scratch made instrument cluster with 2 modes: Normal (circle tacho) and Track (inline tacho)
+  available in metric (km/h + C) and imperial (mph + F)
+  Track Mode also have BRZ tS version with STi logo
