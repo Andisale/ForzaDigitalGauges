@@ -1,0 +1,255 @@
+<Page
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:local="clr-namespace:ForzaUI"
+    mc:Ignorable="d"
+	x:Class="ForzaUI.AUD_RS6_15">
+	
+    <Page.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="{x:Type local:FastTextBlock}">
+            <Setter Property="FontFamily" Value="DG1_ArialBold"/>
+			<Setter Property="FontSize" Value="24"/>
+            <Setter Property="Foreground" Value="White"/>
+			<Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+		
+		<local:DigitalGaugeConfig x:Key="Config" HasClock="True" HasExternalTemp="True" UseDegreesF="False" UseMPH="False" UsePsi="True" MaxBoost="13" MinBoost="1" MaxSpeed="120" HasAbsLight="False" HasStmLight="False" HasTcsLight="False" HasGAccelX="False" HasGAccelY="False" HasShiftLights="False" HasTextTach="False" HasLapPlaceInfo="False" HasTextBoost="False" HasTextGAccel="False" HasTextOdometer="True" HasTextFuel="False" MaxFuel="20" MinGear="-1" MaxGear="8" MaxRpm="10000"></local:DigitalGaugeConfig>
+		
+		<Storyboard x:Key="Start Up Animation">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Start_Up_Mask">
+				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="Fuel Gauge">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Fuel_1">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.125" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.131" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Fuel_2">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.25" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.259" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Fuel_3">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.375" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.385" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Fuel_4">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.506" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Fuel_5">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.625" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.629" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Fuel_6">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.75" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.755" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Fuel_7">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.874" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.883" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="Gear Analog">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Gear_2">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+	</Page.Resources>
+	
+	<Page.Triggers>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
+			<BeginStoryboard Storyboard="{StaticResource Fuel Gauge}"/>
+			<BeginStoryboard Storyboard="{StaticResource Gear Analog}"/>
+		</EventTrigger>
+	</Page.Triggers>
+	
+	<Canvas x:Name="LayoutRoot" Background="Transparent" Width="1280" Height="720">
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="NightDaySplit">
+				<VisualState x:Name="Day"/>
+				<VisualState x:Name="Night"/>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		<Rectangle x:Name="Background_Grey" Fill="#FF3B3B3B" Height="720" Width="1280" Canvas.Left="0" Canvas.Top="0"/>
+		<Rectangle x:Name="Background_HVAC" Fill="Black" Height="114" Canvas.Left="510" Canvas.Top="476" Width="312"/>
+		<Canvas x:Name="Fuel_Animation" Height="428" Canvas.Left="1011.333" Canvas.Top="363" Width="260.667">
+			<Rectangle x:Name="Background" Fill="Black" Height="252" Canvas.Left="-149" Canvas.Top="105.168" Width="417.667"/>
+			<Image x:Name="Fuel_8" Height="183" Canvas.Left="132.662" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_Fuel_8.png" Stretch="Fill" Canvas.Top="161.669" Width="106"/>
+			<Image x:Name="Fuel_7" Height="183" Canvas.Left="132.662" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_Fuel_7.png" Stretch="Fill" Canvas.Top="161.669" Width="106"/>
+			<Image x:Name="Fuel_6" Height="183" Canvas.Left="132.662" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_Fuel_6.png" Stretch="Fill" Canvas.Top="161.669" Width="106"/>
+			<Image x:Name="Fuel_5" Height="183" Canvas.Left="132.662" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_Fuel_5.png" Stretch="Fill" Canvas.Top="161.669" Width="106"/>
+			<Image x:Name="Fuel_4" Height="183" Canvas.Left="132.662" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_Fuel_4.png" Stretch="Fill" Canvas.Top="161.669" Width="106"/>
+			<Image x:Name="Fuel_3" Height="183" Canvas.Left="132.662" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_Fuel_3.png" Stretch="Fill" Canvas.Top="161.669" Width="106"/>
+			<Image x:Name="Fuel_2" Height="183" Canvas.Left="132.662" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_Fuel_2.png" Stretch="Fill" Canvas.Top="161.669" Width="106"/>
+			<Image x:Name="Fuel_1" Height="183" Canvas.Left="132.662" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_Fuel_1.png" Stretch="Fill" Canvas.Top="161.669" Width="106"/>
+		</Canvas>
+		<Rectangle x:Name="Background_Tach_Speedo" Fill="Black" Height="720" Width="510.5" Canvas.Left="-0.5"/>
+		<Rectangle x:Name="Background_Center" Fill="Black" Height="472" Width="770" Canvas.Left="510"/>
+		<Image x:Name="MFD_Graphics" Height="355" Canvas.Left="595" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_MFD_graphics.png" Stretch="Fill" Canvas.Top="53" Width="615"/>
+		<Rectangle Fill="Black" Height="25" Width="25" Canvas.Left="896" Canvas.Top="342"/>
+		<Rectangle Fill="Black" Height="30" Width="34" Canvas.Left="631" Canvas.Top="70"/>
+		<Image x:Name="Tach_Redline" Height="136" Canvas.Left="350" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_Tach_Red.png" Stretch="Fill" Canvas.Top="102" Width="36" Opacity="0.705"/>
+		<Canvas x:Name="Text" Height="720" Width="1280">
+			<local:FastTextBlock x:Name="Text_Fuel" Text="500" Canvas.Left="526" Canvas.Top="68" Style="{StaticResource TextBlockStyle}" Width="150">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.85" ScaleY="0.95"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_External_Temp" Text="{Binding ExternalTemp}" Canvas.Left="604" Canvas.Top="340.5" Style="{StaticResource TextBlockStyle}" Width="150">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="1.25" ScaleY="1.25"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_Clock" Text="{Binding Time}" Canvas.Left="642" Canvas.Top="375" Style="{StaticResource TextBlockStyle}" Width="120">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="1.25" ScaleY="1.25"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_Date" Canvas.Left="800" Canvas.Top="304" Text="16.07.2026" FontSize="24" Style="{StaticResource TextBlockStyle}" Width="150">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="1.25" ScaleY="1.25"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_Speed" Text="{Binding Speed}" Canvas.Left="670" Canvas.Top="178" Style="{StaticResource TextBlockStyle}" Width="250" FontSize="83">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="1.1"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_Trip_Odo" Text="{Binding TripMeter}" Canvas.Left="885" Canvas.Top="340.5" Style="{StaticResource TextBlockStyle}" Width="150">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="1.25" ScaleY="1.25"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<Rectangle x:Name="Text_Trip_Odo_Cover1" Fill="Black" Height="30" Width="18" Canvas.Left="977" Canvas.Top="340">
+				<Rectangle.Style>
+					<Style TargetType="Rectangle">
+						<Setter Property="Visibility" Value="Visible" />
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding Text, ElementName=Text_Trip_Odo}" Value="100.0">
+								<DataTrigger.EnterActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+												<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}"/>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</BeginStoryboard>
+								</DataTrigger.EnterActions>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding Text, ElementName=Text_Trip_Odo}" Value="000.0">
+								<DataTrigger.EnterActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+												<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</BeginStoryboard>
+								</DataTrigger.EnterActions>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</Rectangle.Style>
+			</Rectangle>
+			<Rectangle x:Name="Text_Trip_Odo_Cover2" Fill="Black" Height="30" Width="35" Canvas.Left="977" Canvas.Top="340">
+				<Rectangle.Style>
+					<Style TargetType="Rectangle">
+						<Setter Property="Visibility" Value="Visible" />
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding Text, ElementName=Text_Trip_Odo}" Value="010.0">
+								<DataTrigger.EnterActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+												<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}"/>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</BeginStoryboard>
+								</DataTrigger.EnterActions>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding Text, ElementName=Text_Trip_Odo}" Value="000.0">
+								<DataTrigger.EnterActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+												<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</BeginStoryboard>
+								</DataTrigger.EnterActions>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</Rectangle.Style>
+			</Rectangle>
+			
+			<Border x:Name="Border_Odometer" Width="84" Height="50" Canvas.Left="971" Canvas.Top="365">
+				<Border.Clip>
+					<RectangleGeometry Rect="0,0,84,50"/>
+				</Border.Clip>
+				<Canvas>
+					<local:FastTextBlock x:Name="Text_Odometer" Text="{Binding Odometer}" Canvas.Left="-139" Canvas.Top="10" Style="{StaticResource TextBlockStyle}" Width="220">
+						<local:FastTextBlock.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="1.25" ScaleY="1.25"/>
+								<SkewTransform/>
+								<RotateTransform/>
+								<TranslateTransform/>
+							</TransformGroup>
+						</local:FastTextBlock.RenderTransform>
+					</local:FastTextBlock>
+					<Rectangle x:Name="Text_Odometer_Cover1" Fill="Black" Height="30" Width="35" Canvas.Left="-18" Canvas.Top="10"/>
+					<Rectangle x:Name="Text_Odometer_Cover2" Fill="Black" Height="30" Width="51" Canvas.Left="-18" Canvas.Top="10" Visibility="Collapsed"/>
+					<Rectangle x:Name="Text_Odometer_Cover3" Fill="Black" Height="30" Width="68" Canvas.Left="-18" Canvas.Top="10" Visibility="Collapsed"/>
+				</Canvas>
+			</Border>
+			
+			<local:FastTextBlock x:Name="Text_Gear" Text="{Binding Gear}" Style="{StaticResource TextBlockStyle}" Canvas.Left="864" Canvas.Top="337.5" FontSize="32" Width="50">
+			    <local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="1.15"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_Gear_D" Canvas.Left="858" Canvas.Top="370.5" Text="D" FontSize="32" Style="{StaticResource TextBlockStyle}" Width="50"/>
+			<Canvas x:Name="Gear_2" Background="Black" Height="60" Width="50" Canvas.Left="870" Canvas.Top="342" Visibility="Hidden">
+				<local:FastTextBlock x:Name="Text_Gear_2" Text="{Binding Gear}" Canvas.Left="-12" Canvas.Top="-5.5" Style="{StaticResource TextBlockStyle}" FontSize="32" Width="50"/>
+			</Canvas>
+			<local:FastTextBlock x:Name="Text_Null_Temp1" Canvas.Left="492.164" Canvas.Top="493.5" Text="22." FontSize="40" Style="{StaticResource TextBlockStyle}" Width="120" FontFamily="Moire" Foreground="White">
+				<local:FastTextBlock.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleY="1.1"/>
+						<SkewTransform/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_Null_Temp2" Canvas.Left="653.164" Canvas.Top="493.5" Text="22." FontSize="40" Style="{StaticResource TextBlockStyle}" Width="120" FontFamily="Moire" Foreground="White">
+				<local:FastTextBlock.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleY="1.1"/>
+						<SkewTransform/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<Image x:Name="Graphics_Symbol_1" Height="21" Canvas.Left="610" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_txt_temp_symbol_1.png" Stretch="Fill" Canvas.Top="500" Width="17"/>
+			<Image x:Name="Graphics_Symbol_2" Height="21" Canvas.Left="769" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_txt_temp_symbol_1.png" Stretch="Fill" Canvas.Top="500" Width="17"/>
+			<Image x:Name="Graphics_Symbol_3" Height="17" Canvas.Left="652.164" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_txt_temp_symbol_2.png" Stretch="Fill" Canvas.Top="500" Width="28"/>
+		</Canvas>
+		<Image x:Name="Temperature_Graphics" Height="190" Canvas.Left="925" Source="game:/media/cars/AUD_RS6_15/UI/Textures/AUD_RS6_15_Temp_Graphics.png" Stretch="Fill" Canvas.Top="515" Width="111"/>
+		
+		<Rectangle x:Name="Start_Up_Mask" Fill="Black" Height="720" Stroke="Black" Width="1280" Canvas.Left="0" Canvas.Top="0" Opacity="0"/>
+		
+		<!-- Storyboard binding controllers -->
+		<local:StoryboardController SeekPct="{Binding Fuel}" Target="{StaticResource Fuel Gauge}"/>
+		<local:StoryboardController SeekPct="{Binding AnalogGear}" Target="{StaticResource Gear Analog}"/>
+	</Canvas>
+</Page>
