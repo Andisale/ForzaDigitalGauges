@@ -1,9 +1,4 @@
-- 2026-07-17 -
-
-Audi RS6 Avant '15
-- overall look improvement
-
-
+--------------
 - 2026-07-05 -
 
 Nissan Skyline GT-R V-Spec II '00
@@ -18,3 +13,17 @@ Subaru BRZ '22
 - complete new scratch made instrument cluster with 2 modes: Normal (circle tacho) and Track (inline tacho)
   available in metric (km/h + C) and imperial (mph + F)
   Track Mode also have BRZ tS version with STi logo
+
+--------------
+- 2026-07-17 -
+
+Audi RS6 Avant '15
+- overall look improvement
+
+--------------
+- 2026-07-20 -
+
+BMW M2 '23
+- analog speedo on the left side
+- overall look improvement
+  available in metric (km/h + C) and imperial (mph + F)

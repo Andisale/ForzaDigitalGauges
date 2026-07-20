@@ -26,7 +26,7 @@
 			<Setter Property="Width" Value="60"/>
 		</Style>
 		
-		<local:DigitalGaugeConfig x:Key="Config" HasClock="True" HasExternalTemp="True" UseDegreesF="True" UseMPH="True" UsePsi="True" MaxBoost="13" MinBoost="1" MaxSpeed="92.5" HasAbsLight="False" HasStmLight="False" HasTcsLight="False" HasGAccelX="True" HasGAccelY="True" HasShiftLights="False" HasTextTach="False" HasLapPlaceInfo="False" HasTextBoost="False" HasTextGAccel="True" HasTextOdometer="True" HasTextFuel="False" MaxFuel="20.0" MinGear="-1" MaxGear="1" MaxRpm="8000"></local:DigitalGaugeConfig>
+		<local:DigitalGaugeConfig x:Key="Config" HasClock="True" HasExternalTemp="True" UseDegreesF="False" UseMPH="False" UsePsi="True" MaxBoost="13" MinBoost="1" MaxSpeed="92.5" HasAbsLight="False" HasStmLight="False" HasTcsLight="False" HasGAccelX="True" HasGAccelY="True" HasShiftLights="False" HasTextTach="False" HasLapPlaceInfo="False" HasTextBoost="False" HasTextGAccel="True" HasTextOdometer="True" HasTextFuel="False" MaxFuel="20.0" MinGear="-1" MaxGear="1" MaxRpm="8000"></local:DigitalGaugeConfig>
 		
 		<Storyboard x:Key="Speed Analog"/>
 		<Storyboard x:Key="Start Up Animation">
@@ -141,83 +141,79 @@
 		<Storyboard x:Key="Speedo">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="Border_Speed">
                 <EasingDoubleKeyFrame KeyTime="0" Value="210"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.483" Value="86"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.58" Value="61.2"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.967" Value="12"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.45" Value="86"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.991" Value="12"/>
             </DoubleAnimationUsingKeyFrames>
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="Canvas_Speed">
                 <EasingDoubleKeyFrame KeyTime="0" Value="-210"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.483" Value="-86"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.58" Value="-61.2"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.967" Value="-12"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.45" Value="-86"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.991" Value="-12"/>
             </DoubleAnimationUsingKeyFrames>
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="Speedo_Needle">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.464" Value="-70"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.483" Value="-70"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.503" Value="-67"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.58" Value="-56"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.967" Value="-26.5"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.435" Value="-70"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.45" Value="-70"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.487" Value="-67"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.991" Value="-26.5"/>
             </DoubleAnimationUsingKeyFrames>
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="Speedo_Needle">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.464" Value="-119.5"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.483" Value="-124.5"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.503" Value="-129.5"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.58" Value="-148.5"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.967" Value="-199"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.435" Value="-119.5"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.45" Value="-124.5"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.487" Value="-129.5"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.991" Value="-199"/>
             </DoubleAnimationUsingKeyFrames>
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(SkewTransform.AngleX)" Storyboard.TargetName="Speedo_Needle">
                 <EasingDoubleKeyFrame KeyTime="0" Value="31"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.464" Value="31"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.483" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.503" Value="-31"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.967" Value="-31"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.435" Value="31"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.45" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.487" Value="-31"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.991" Value="-31"/>
             </DoubleAnimationUsingKeyFrames>
 			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_0">
 				<EasingColorKeyFrame KeyTime="0" Value="White"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.097" Value="#FF6BB4E4"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.967" Value="#FF6BB4E4"/>
-			</ColorAnimationUsingKeyFrames>
-			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_20">
-				<EasingColorKeyFrame KeyTime="0" Value="#FF6BB4E4"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.097" Value="White"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.193" Value="#FF6BB4E4"/>
-			</ColorAnimationUsingKeyFrames>
-			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_40">
 				<EasingColorKeyFrame KeyTime="0:0:0.09" Value="#FF6BB4E4"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.193" Value="White"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.29" Value="#FF6BB4E4"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.991" Value="#FF6BB4E4"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_30">
+				<EasingColorKeyFrame KeyTime="0" Value="#FF6BB4E4"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.09" Value="White"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.18" Value="#FF6BB4E4"/>
 			</ColorAnimationUsingKeyFrames>
 			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_60">
-				<EasingColorKeyFrame KeyTime="0:0:0.193" Value="#FF6BB4E4"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.29" Value="White"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.387" Value="#FF6BB4E4"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.09" Value="#FF6BB4E4"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.18" Value="White"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.27" Value="#FF6BB4E4"/>
 			</ColorAnimationUsingKeyFrames>
-			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_80">
-				<EasingColorKeyFrame KeyTime="0:0:0.29" Value="#FF6BB4E4"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.387" Value="White"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.483" Value="#FF6BB4E4"/>
-			</ColorAnimationUsingKeyFrames>
-			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_100">
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_90">
+				<EasingColorKeyFrame KeyTime="0:0:0.18" Value="#FF6BB4E4"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.27" Value="White"/>
 				<EasingColorKeyFrame KeyTime="0:0:0.36" Value="#FF6BB4E4"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.483" Value="White"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.58" Value="#FF6BB4E4"/>
 			</ColorAnimationUsingKeyFrames>
 			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_120">
-				<EasingColorKeyFrame KeyTime="0:0:0.483" Value="#FF6BB4E4"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.58" Value="White"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.773" Value="#FF6BB4E4"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.27" Value="#FF6BB4E4"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.36" Value="White"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.45" Value="#FF6BB4E4"/>
 			</ColorAnimationUsingKeyFrames>
-			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_160">
-				<EasingColorKeyFrame KeyTime="0:0:0.58" Value="#FF6BB4E4"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.773" Value="White"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.967" Value="#FF6BB4E4"/>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_150">
+				<EasingColorKeyFrame KeyTime="0:0:0.36" Value="#FF6BB4E4"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.45" Value="White"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.631" Value="#FF6BB4E4"/>
 			</ColorAnimationUsingKeyFrames>
-			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_200">
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_210">
+				<EasingColorKeyFrame KeyTime="0:0:0.45" Value="#FF6BB4E4"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.631" Value="White"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.811" Value="#FF6BB4E4"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_270">
+				<EasingColorKeyFrame KeyTime="0:0:0.631" Value="#FF6BB4E4"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.811" Value="White"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.991" Value="#FF6BB4E4"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(local:FastTextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Text_Speed_330">
 				<EasingColorKeyFrame KeyTime="0" Value="#FF6BB4E4"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.773" Value="#FF6BB4E4"/>
-				<EasingColorKeyFrame KeyTime="0:0:0.967" Value="White"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.811" Value="#FF6BB4E4"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.991" Value="White"/>
 			</ColorAnimationUsingKeyFrames>
 		</Storyboard>
 		
@@ -285,7 +281,13 @@
 				<ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
 			</Image.RenderTransform>
 		</Image>
-		<Rectangle Fill="Black" Height="10" Width="28" Canvas.Left="406" Canvas.Top="300"/>
+		<Rectangle Fill="Black" Height="10" Width="48" Canvas.Left="406" Canvas.Top="300"/>
+		<Path Fill="#FF024094" Data="M645 225L682 225L682 201L659 201"/>
+		<Path Fill="Black" Data="M406 655L406 663L412 663L412 655M885 655L885 663L891 663L891 655M380 655L380 672L401 672L401 655M859 655L859 672L880 672L880 655"/>
+		<local:FastTextBlock x:Name="Text_Climate_unit1" Text="C" Height="15" Canvas.Left="406" Canvas.Top="656" Width="24" FontFamily="Moire" Foreground="White" FontSize="7" TextAlignment="Left"/>
+		<local:FastTextBlock x:Name="Text_Climate_unit2" Text="C" Height="15" Canvas.Left="885" Canvas.Top="656" Width="24" FontFamily="Moire" Foreground="White" FontSize="7" TextAlignment="Left"/>
+		<local:FastTextBlock x:Name="Text_Climate_1" Text="22" Height="22" Canvas.Left="365" Canvas.Top="651" Width="35" FontFamily="DG1_Arial" Foreground="White" FontSize="17" TextAlignment="Right" Opacity="0.85"/>
+		<local:FastTextBlock x:Name="Text_Climate_2" Text="22" Height="22" Canvas.Left="844" Canvas.Top="651" Width="35" FontFamily="DG1_Arial" Foreground="White" FontSize="17" TextAlignment="Right" Opacity="0.85"/>
 		<local:FastTextBlock x:Name="Text_Gear" Height="85" Text="{Binding Gear}" Canvas.Left="602" Canvas.Top="110" Width="80" FontFamily="Moire" Foreground="White" FontSize="72" TextAlignment="Center" RenderTransformOrigin="0.5,0.5">
 			<local:FastTextBlock.RenderTransform>
 				<ScaleTransform ScaleX="1.1" ScaleY="0.9"/>
@@ -296,10 +298,44 @@
 				<ScaleTransform ScaleX="1.5" ScaleY="1.2"/>
 			</local:FastTextBlock.RenderTransform>
 		</local:FastTextBlock>
+		<local:FastTextBlock x:Name="Text_Speed_unit" Height="30" Text="km/h" Canvas.Left="631" Canvas.Top="197" Width="90.834" FontFamily="Moire" Foreground="#FF72C7EB" FontSize="24" TextAlignment="Left" RenderTransformOrigin="0.5,0.5">
+			<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+			</local:FastTextBlock.RenderTransform>
+		</local:FastTextBlock>
 		<local:FastTextBlock x:Name="Text_ExternalTemp" Text="{Binding Extermal Temp}" Height="15" Canvas.Left="970"   Canvas.Top="295" Width="48.375" FontFamily="Moire" Foreground="#FF6BB4E4" FontSize="14" TextAlignment="Right"/>
 		<local:FastTextBlock x:Name="Text_Clock1" Text="{Binding Time}" Height="15" Canvas.Left="285.625"   Canvas.Top="296.56" Width="48.375" FontFamily="Moire" Foreground="#FF6BB4E4" FontSize="14" TextAlignment="Center"/>
 		<local:FastTextBlock x:Name="Text_Clock2" Text="{Binding Time}" Height="15" Canvas.Left="1016.625"   Canvas.Top="385" Width="48.375" FontFamily="Moire" Foreground="#FF6BB4E4" FontSize="14" TextAlignment="Right"/>
-		<local:FastTextBlock x:Name="Text_Fuel" Text="300" Height="15" Canvas.Left="387" Canvas.Top="296" Width="48.375" FontFamily="Moire" Foreground="#FF6BB4E4" FontSize="14" TextAlignment="Right"/>
+		<local:FastTextBlock x:Name="Text_Fuel" Text="500" Height="15" Canvas.Left="387" Canvas.Top="296" Width="48.375" FontFamily="Moire" Foreground="#FF6BB4E4" FontSize="14" TextAlignment="Right"/>
+		<local:FastTextBlock x:Name="Text_Fuel_unit" Text="km" Height="15" Canvas.Left="435.5" Canvas.Top="297.5" Width="24" FontFamily="Moire" Foreground="#FF6BB4E4" FontSize="12" TextAlignment="Left"/>
+		<Canvas x:Name="Text_Temp_Bar" Width="1280" Height="720">
+			<Path Fill="Black" Data="M806 268L833 268L833 256L806 256M826 236L853 236L853 223L826 223M844 203L871 203L871 190L844 190M853.5 219L863 219L863 205L853.5 205M1024 298L1032 298L1032 310L1024 310"/>
+			<local:FastTextBlock x:Name="Text_Temp_min" Text="50" Canvas.Left="787" Canvas.Top="247.5" Style="{StaticResource TextBase}" Foreground="#FF6BB4E4">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_Temp_mid" Text="100" Canvas.Left="807" Canvas.Top="214.5" Style="{StaticResource TextBase}" Foreground="#FF6BB4E4">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_Temp_max" Text="150" Canvas.Left="825" Canvas.Top="181.5" Style="{StaticResource TextBase}" Foreground="#FF6BB4E4">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_Temp_unit" Text="C" Canvas.Left="817" Canvas.Top="197.5" Style="{StaticResource TextBase}" Foreground="#FF6BB4E4">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+			<local:FastTextBlock x:Name="Text_AmbientTemp_unit" Text="C" Canvas.Left="988" Canvas.Top="290" Style="{StaticResource TextBase}" Foreground="#FF6BB4E4">
+				<local:FastTextBlock.RenderTransform>
+					<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+				</local:FastTextBlock.RenderTransform>
+			</local:FastTextBlock>
+		</Canvas>
 		
 		<Canvas x:Name="Text_Tach" Width="1280" Height="720">
 			<Rectangle Fill="Black" Height="212" Width="26" Canvas.Left="873" Canvas.Top="66">
@@ -366,8 +402,8 @@
 			<Rectangle Fill="White" Height="4" Width="64" Canvas.Left="1" Canvas.Top="1" RadiusX="0.5" RadiusY="0.5"/>
 		</Canvas>
 		
-		<Canvas x:Name="Text_Speed_mph" Width="1280" Height="720">
-			<local:FastTextBlock x:Name="Text_mph" Text="mph" Canvas.Left="488" Canvas.Top="39.5" Style="{StaticResource TextBase}" Foreground="#FF6BB4E4">
+		<Canvas x:Name="Text_Speed_kmh" Width="1280" Height="720">
+			<local:FastTextBlock x:Name="Text_kmh" Text="kmh" Canvas.Left="488" Canvas.Top="39.5" Style="{StaticResource TextBase}" Foreground="#FF6BB4E4">
 				<local:FastTextBlock.RenderTransform>
 					<ScaleTransform ScaleX="0.45" ScaleY="0.45"/>
 				</local:FastTextBlock.RenderTransform>
@@ -377,42 +413,42 @@
 					<ScaleTransform ScaleX="0.75" ScaleY="0.55"/>
 				</local:FastTextBlock.RenderTransform>
 			</local:FastTextBlock>
-			<local:FastTextBlock x:Name="Text_Speed_20" Text="20" Canvas.Left="459" Canvas.Top="230.2" Style="{StaticResource TextBase}">
+			<local:FastTextBlock x:Name="Text_Speed_30" Text="30" Canvas.Left="459" Canvas.Top="230.2" Style="{StaticResource TextBase}">
 				<local:FastTextBlock.RenderTransform>
 					<ScaleTransform ScaleX="0.75" ScaleY="0.55"/>
 				</local:FastTextBlock.RenderTransform>
 			</local:FastTextBlock>
-			<local:FastTextBlock x:Name="Text_Speed_40" Text="40" Canvas.Left="444" Canvas.Top="205.4" Style="{StaticResource TextBase}">
+			<local:FastTextBlock x:Name="Text_Speed_60" Text="60" Canvas.Left="444" Canvas.Top="205.4" Style="{StaticResource TextBase}">
 				<local:FastTextBlock.RenderTransform>
 					<ScaleTransform ScaleX="0.75" ScaleY="0.55"/>
 				</local:FastTextBlock.RenderTransform>
 			</local:FastTextBlock>
-			<local:FastTextBlock x:Name="Text_Speed_60" Text="60" Canvas.Left="429" Canvas.Top="180.6" Style="{StaticResource TextBase}">
+			<local:FastTextBlock x:Name="Text_Speed_90" Text="90" Canvas.Left="429" Canvas.Top="180.6" Style="{StaticResource TextBase}">
 				<local:FastTextBlock.RenderTransform>
 					<ScaleTransform ScaleX="0.75" ScaleY="0.55"/>
 				</local:FastTextBlock.RenderTransform>
 			</local:FastTextBlock>
-			<local:FastTextBlock x:Name="Text_Speed_80" Text="80" Canvas.Left="414" Canvas.Top="155.8" Style="{StaticResource TextBase}">
+			<local:FastTextBlock x:Name="Text_Speed_120" Text="120" Canvas.Left="414" Canvas.Top="155.8" Style="{StaticResource TextBase}">
 				<local:FastTextBlock.RenderTransform>
 					<ScaleTransform ScaleX="0.75" ScaleY="0.55"/>
 				</local:FastTextBlock.RenderTransform>
 			</local:FastTextBlock>
-			<local:FastTextBlock x:Name="Text_Speed_100" Text="100" Canvas.Left="405" Canvas.Top="131" Style="{StaticResource TextBase}">
+			<local:FastTextBlock x:Name="Text_Speed_150" Text="150" Canvas.Left="405" Canvas.Top="131" Style="{StaticResource TextBase}">
 				<local:FastTextBlock.RenderTransform>
 					<ScaleTransform ScaleX="0.75" ScaleY="0.55"/>
 				</local:FastTextBlock.RenderTransform>
 			</local:FastTextBlock>
-			<local:FastTextBlock x:Name="Text_Speed_120" Text="120" Canvas.Left="414" Canvas.Top="106.2" Style="{StaticResource TextBase}">
+			<local:FastTextBlock x:Name="Text_Speed_210" Text="210" Canvas.Left="414" Canvas.Top="106.2" Style="{StaticResource TextBase}">
 				<local:FastTextBlock.RenderTransform>
 					<ScaleTransform ScaleX="0.75" ScaleY="0.55"/>
 				</local:FastTextBlock.RenderTransform>
 			</local:FastTextBlock>
-			<local:FastTextBlock x:Name="Text_Speed_160" Text="160" Canvas.Left="429" Canvas.Top="81.4" Style="{StaticResource TextBase}">
+			<local:FastTextBlock x:Name="Text_Speed_270" Text="270" Canvas.Left="429" Canvas.Top="81.4" Style="{StaticResource TextBase}">
 				<local:FastTextBlock.RenderTransform>
 					<ScaleTransform ScaleX="0.75" ScaleY="0.55"/>
 				</local:FastTextBlock.RenderTransform>
 			</local:FastTextBlock>
-			<local:FastTextBlock x:Name="Text_Speed_200" Text="200" Canvas.Left="444" Canvas.Top="56.6" Style="{StaticResource TextBase}">
+			<local:FastTextBlock x:Name="Text_Speed_330" Text="330" Canvas.Left="444" Canvas.Top="56.6" Style="{StaticResource TextBase}">
 				<local:FastTextBlock.RenderTransform>
 					<ScaleTransform ScaleX="0.75" ScaleY="0.55"/>
 				</local:FastTextBlock.RenderTransform>
